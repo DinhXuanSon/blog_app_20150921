@@ -1,0 +1,14 @@
+<li id="entry-<%= entry.id %>">
+  <%= link_to gravatar_for(entry.user, size: 50), entry.user %>
+  <span class="user"><%= link_to entry.user.name, entry.user %></span>
+  <span class="subject"><%= entry.subject %></span>
+  <span class="content"><%= entry.content %></span>
+  <span class="timestamp">
+    Created at <%= entry.created_at %>.
+    <% if current_user?(entry.user) %>
+      <%= link_to "delete", entry, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    <% end %>
+    <%= link_to "Comment", '#'%> 
+  </span>
+</li>
