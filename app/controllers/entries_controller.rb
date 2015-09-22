@@ -1,7 +1,6 @@
 class EntriesController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy, :show]
   before_action :correct_user,   only: :destroy
-
   def create
     @entry = current_user.entries.build(entry_params)
     if @entry.save
@@ -19,7 +18,11 @@ class EntriesController < ApplicationController
     redirect_to request.referrer || root_url
 
   end
-
+  def show
+    @entry = Entry.find(params[:id])
+    @comments = @entry.comments.paginate(page: params[:page])
+    @comment = current_user.comments.build(entry_id: @entry.id)
+  end
   private
 
     def entry_params

@@ -5,10 +5,11 @@
   <span class="content"><%= entry.content %></span>
   <span class="timestamp">
     Created at <%= entry.created_at %>.
+    <%= link_to "Comment (" << entry.comments.count.to_s << ")", entry%> 
     <% if current_user?(entry.user) %>
       <%= link_to "delete", entry, method: :delete,
                                        data: { confirm: "You sure?" } %>
     <% end %>
-    <%= link_to "Comment", '#'%> 
+    
   </span>
 </li>

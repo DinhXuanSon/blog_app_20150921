@@ -1,0 +1,12 @@
+<li id="comment-<%= comment.id %>">
+  <%= link_to gravatar_for(comment.user, size: 50), comment.user %>
+  <span class="user"><%= link_to comment.user.name, comment.user %></span>
+  <span class="content"><%= comment.content %></span>
+  <span class="timestamp">
+    Created at <%= comment.created_at %>.
+    <% if current_user?(comment.user) %>
+      <%= link_to "delete",'#'%>
+    <% end %>
+    <%= link_to "Comment", '#'%> 
+  </span>
+</li>

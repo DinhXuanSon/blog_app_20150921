@@ -29,6 +29,15 @@ followers.each { |follower| follower.follow(user) }
 
 users = User.order(:created_at).take(6)
 50.times do
-  content = Faker::Lorem.sentence(5)
-  users.each { |user| user.entries.create!(content: content) }
+  content = Faker::Lorem.sentence(Random.rand(50))
+  subject = Faker::Lorem.sentence(5)
+  users.each { |user| user.entries.create!(content: content, subject: subject) }
+end
+1000.times do |n|
+  content  = Faker::Lorem.sentence(5)
+  user_id = Random.rand(99)
+  entry_id = Random.rand(100)
+  Comment.create!(user_id:  user_id,
+               entry_id: entry_id,
+               content:content)
 end
