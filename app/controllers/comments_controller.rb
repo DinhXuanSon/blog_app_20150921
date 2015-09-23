@@ -1,9 +1,9 @@
 class CommentsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: :destroy
 
   def create
-    debugged
-    @comment = current_user.comments.build(comment_params)
+    @comment = current_user.comments.build(entry_id: params[:entry_id], content: params[:comment][:content])
     if @comment.save
       flash[:success] = "Commented !"
       redirect_to root_url
@@ -22,11 +22,10 @@ class CommentsController < ApplicationController
    private
 
     def comment_params
-      params.require(:comment).permit(:content)
-      params[:comment][:entry_id] = 1
+      params.require(:comment).permit(:content, :entry_id)
     end
     def correct_user
-      @coment = current_user.comment.find_by(id: params[:id])
-      redirect_to root_url if @entry.nil?
+      @comment = current_user.comments.find_by(id: params[:id])
+      redirect_to root_url if @comment.nil?
     end
 end
